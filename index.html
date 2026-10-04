@@ -10,6 +10,30 @@
 <script src="assets/site.js" defer></script>
 </head>
 <body>
+<div id="im-gate" style="position:fixed;inset:0;z-index:9999;background:#121212;display:flex;align-items:center;justify-content:center;font-family:Archivo,system-ui,sans-serif"><div style="display:flex;flex-direction:column;align-items:center;gap:32px;padding:40px;max-width:420px;width:100%"><span style="font-family:Archivo,sans-serif;font-style:italic;font-weight:900;letter-spacing:-0.02em;font-size:32px;color:#EDE6D6;text-transform:uppercase">IMM<span style="display:inline-block;box-sizing:border-box;width:2.1em;height:1cap;border-radius:1cap;border:0.17em solid transparent;vertical-align:baseline;transform:skewX(-12deg);background:linear-gradient(#121212,#121212) padding-box,linear-gradient(90deg,transparent 0%,rgba(255,106,31,.55) 55%,#FF6A1F 100%) border-box"></span>TION</span><div style="display:flex;flex-direction:column;align-items:center;gap:12px;width:100%;text-align:center"><span style="color:rgba(237,230,214,.72);font-size:14px">Site en accès restreint</span><input id="im-gate-input" type="password" inputmode="numeric" maxlength="10" placeholder="Code d'accès" autocomplete="off" style="width:100%;box-sizing:border-box;background:rgba(237,230,214,.08);border:1px solid rgba(237,230,214,.24);border-radius:12px;padding:14px 16px;font:700 24px Archivo,sans-serif;color:#EDE6D6;text-align:center;letter-spacing:0.25em;outline:none"><span id="im-gate-err" style="color:#FF6A1F;font-size:13px;min-height:18px"></span><button id="im-gate-btn" style="width:100%;border:0;background:#FF6A1F;color:#121212;font:700 15px Archivo,sans-serif;padding:14px;border-radius:12px;cursor:pointer">Accéder au site</button></div></div></div>
+<script>
+(function(){
+  if(sessionStorage.getItem('im_ok')==='1'){
+    document.getElementById('im-gate').style.display='none';
+  } else {
+    document.body.style.overflow='hidden';
+  }
+  function check(){
+    var v=document.getElementById('im-gate-input').value;
+    if(v==='1262'){
+      sessionStorage.setItem('im_ok','1');
+      document.getElementById('im-gate').style.display='none';
+      document.body.style.overflow='';
+    } else {
+      document.getElementById('im-gate-err').textContent='Code incorrect.';
+      document.getElementById('im-gate-input').value='';
+      document.getElementById('im-gate-input').focus();
+    }
+  }
+  document.getElementById('im-gate-btn').addEventListener('click',check);
+  document.getElementById('im-gate-input').addEventListener('keydown',function(e){if(e.key==='Enter')check();});
+})();
+</script>
 <x-dc>
 <helmet>
 <link rel="preconnect" href="https://fonts.googleapis.com">
